@@ -12,10 +12,17 @@
   </ul>
   <h1>Gesture</h1>
   <p>Show the gestures of the Leap Motion Controller. There are four gesture the swipe, cycle, key tap and screen tap.</p>
+  <p><a id="movie-link" href="javascript:void(0)">Show Movie</a></p>
+  <p id="movie"><iframe width="560" height="315" src="http://www.youtube.com/embed/v0RFRTSORxM" frameborder="0" allowfullscreen></iframe></p>
   <p id="type">Gesture Type: <em></em></p>
   <p id="state">Gesture Sate: <em></em></p>
 <script>
 $(function() {
+  $('#movie').hide();
+  $('#movie-link').click(function() {
+    $('#movie').toggle();
+  });
+
   var typeValue = $('p#type em');
   var stateValue = $('p#state em');
   Leap.loop({enableGestures: true}, function(frame){

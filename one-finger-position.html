@@ -25,11 +25,18 @@
   </ul>
   <h1>One Finger Position</h1>
   <p>Show the one finger position of the Leap Motion Controller.</p>
+  <p><a id="movie-link" href="javascript:void(0)">Show Movie</a></p>
+  <p id="movie"><iframe width="560" height="315" src="http://www.youtube.com/embed/Xmiqf66Qr9A" frameborder="0" allowfullscreen></iframe></p>
   <div id="content">
     <canvas></canvas>
   </div>
 <script>
 $(function() {
+  $('#movie').hide();
+  $('#movie-link').click(function() {
+    $('#movie').toggle();
+  });
+
   var centerX = 0;
   var centerY = 0;
   sizing();

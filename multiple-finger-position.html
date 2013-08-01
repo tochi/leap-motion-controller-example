@@ -25,11 +25,18 @@
   </ul>
   <h1>Multiple Finger Position</h1>
   <p>Show the multiple finger position of the Leap Motion Controller.</p>
+  <p><a id="movie-link" href="javascript:void(0)">Show Movie</a></p>
+  <p id="movie"><iframe width="560" height="315" src="http://www.youtube.com/embed/H5GrQidL8xg" frameborder="0" allowfullscreen></iframe></p>
   <div id="content">
     <canvas></canvas>
   </div>
 <script>
 $(function() {
+  $('#movie').hide();
+  $('#movie-link').click(function() {
+    $('#movie').toggle();
+  });
+
   var centerX = new Array(1);
   var centerY = new Array(1);
   sizing();
