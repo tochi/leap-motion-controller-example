@@ -27,7 +27,6 @@ $(function() {
   var stateValue = $('p#state em');
   Leap.loop({enableGestures: true}, function(frame){
     $(frame.gestures).each(function() {
-      console.log(this);
       typeValue.html(this.type);
       stateValue.html(this.state);
     });

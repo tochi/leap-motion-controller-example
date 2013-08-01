@@ -42,7 +42,7 @@ $(function() {
   sizing();
   draw(centerX, centerY);
 
-  Leap.loop({enableGestures: true}, function(frame){
+  Leap.loop(function(frame){
     if (frame.fingers.length > 0) {
       var x = new Array(frame.fingers.length);
       var y = new Array(frame.fingers.length);
