@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">        
+  <title>One Finger Position</title>
+  <script src="./leap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <style type="text/css">
+    body{
+      margin: 0px;
+      padding: 0px;
+      position: relative;
+    }
+    body #content{
+      width: 100%;
+      height: 100%;
+      position: fixed;
+    }
+    canvas { background-color: #e8e8e8; }
+  </style>
+</head>
+<body>
+  <ul>
+    <li><a href="index.html">Menu</a></li>
+  </ul>
+  <h1>One Finger Position</h1>
+  <p>Show the one finger position of the Leap Motion Controller.</p>
+  <div id="content">
+    <canvas></canvas>
+  </div>
+<script>
+$(function() {
+  var centerX = 0;
+  var centerY = 0;
+  sizing();
+  draw(centerX, centerY);
+
+  Leap.loop({enableGestures: true}, function(frame){
+    if (frame.fingers[0]) {
+      var x = frame.fingers[0].tipPosition[0];
+      var y = frame.fingers[0].tipPosition[1];
+      var z = frame.fingers[0].tipPosition[2];
+      draw(x + centerX, $("canvas").height() - y, z);
+    }
+  });
+
+  $(window).resize(function() {
+    sizing();
+    draw(centerX, centerY);
+  });
+
+  function sizing() {
+    $("canvas").attr({height:$("#content").height()});
+    $("canvas").attr({width:$("#content").width()});
+    centerX = $("canvas").width() / 2;
+    centerY = $("canvas").height() / 2;
+  }
+
+  function draw(x, y, radius) {
+    if (typeof radius === 'undefined') {
+      radius = 10;
+    } else {
+      radius = radius < 10 ? 10 : radius;
+    }
+    var canvas = $('canvas')[0];
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, $("canvas").width(), $("canvas").height());
+    context.beginPath();
+    context.arc(x, y, radius, 0, Math.PI * 2, false);
+    context.stroke();
+  }
+});
+</script>
+</body>
+</html>

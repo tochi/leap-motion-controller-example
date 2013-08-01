@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">        
+  <title>Gesture</title>
+  <script src="./leap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+</head>
+<body>
+  <ul>
+    <li><a href="index.html">Menu</a></li>
+  </ul>
+  <h1>Gesture</h1>
+  <p>Show the gestures of the Leap Motion Controller. There are four gesture the swipe, cycle, key tap and screen tap.</p>
+  <p id="type">Gesture Type: <em></em></p>
+  <p id="state">Gesture Sate: <em></em></p>
+<script>
+$(function() {
+  var typeValue = $('p#type em');
+  var stateValue = $('p#state em');
+  Leap.loop({enableGestures: true}, function(frame){
+    $(frame.gestures).each(function() {
+      console.log(this);
+      typeValue.html(this.type);
+      stateValue.html(this.state);
+    });
+  });
+});
+</script>
+</body>
+</html>

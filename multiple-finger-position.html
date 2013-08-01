@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">        
+  <title>Multiple Finger Position</title>
+  <script src="./leap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <style type="text/css">
+    body{
+      margin: 0px;
+      padding: 0px;
+      position: relative;
+    }
+    body #content{
+      width: 100%;
+      height: 100%;
+      position: fixed;
+    }
+    canvas { background-color: #e8e8e8; }
+  </style>
+</head>
+<body>
+  <ul>
+    <li><a href="index.html">Menu</a></li>
+  </ul>
+  <h1>Multiple Finger Position</h1>
+  <p>Show the multiple finger position of the Leap Motion Controller.</p>
+  <div id="content">
+    <canvas></canvas>
+  </div>
+<script>
+$(function() {
+  var centerX = new Array(1);
+  var centerY = new Array(1);
+  sizing();
+  draw(centerX, centerY);
+
+  Leap.loop({enableGestures: true}, function(frame){
+    if (frame.fingers.length > 0) {
+      var x = new Array(frame.fingers.length);
+      var y = new Array(frame.fingers.length);
+      var z = new Array(frame.fingers.length);
+      for (var i = 0; i < frame.fingers.length; i++) {
+        x[i] = frame.fingers[i].tipPosition[0]  + centerX[0];
+        y[i] = $("canvas").height() - frame.fingers[i].tipPosition[1];
+        z[i] = frame.fingers[i].tipPosition[2];        
+      };
+      draw(x, y, z);
+    }
+  });
+
+  $(window).resize(function() {
+    sizing();
+    draw(centerX, centerY);
+  });
+
+  function sizing() {
+    $("canvas").attr({height:$("#content").height()});
+    $("canvas").attr({width:$("#content").width()});
+    centerX[0] = $("canvas").width() / 2;
+    centerY[0] = $("canvas").height() / 2;
+  }
+
+  function draw(x, y, radius) {
+    var canvas = $('canvas')[0];
+    var context = canvas.getContext('2d');
+    context.clearRect(0, 0, $("canvas").width(), $("canvas").height());
+    for (var i = 0; i < x.length; i++) {
+      if (typeof radius === 'undefined') {
+        radius = new Array(x.length);
+        radius[i] = 10;
+      } else {
+        radius[i] = radius[i] < 10 ? 10 : radius[i];
+      }
+      context.beginPath();
+      context.arc(x[i], y[i], radius[i], 0, Math.PI * 2, false);
+      context.stroke();      
+    };
+  }
+});
+</script>
+</body>
+</html>
